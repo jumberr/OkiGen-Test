@@ -42,24 +42,33 @@ public class GameManager : MonoBehaviour
     private List<Coin> coins = new List<Coin>();
 
     // OBSTACLES
-    [Space, Header("OBSTACLES")] 
+    [Space, Header("OBSTACLES")] [SerializeField]
+    private Transform obstaclesParent;
+
     [SerializeField] private int amountObstaclesGroups;
     [SerializeField] private GameObject obstaclesPrefab;
     [SerializeField] private int maxHeightAmountObstacles;
     [SerializeField] private int maxWidthAmountObstacles;
     [SerializeField] private float heightObstacles = 0.5f;
     [SerializeField] private float widthObstacles = 0.5f;
-    private float startPosY = 0.75f;
     private ObjectsCreator obstaclesCreator;
     private List<GameObject> obstacleGroupsGO = new List<GameObject>();
     private List<List<Obstacle>> obstaclesGroups = new List<List<Obstacle>>();
 
     // CUBES
     [Space, Header("CUBES")] [SerializeField]
-    private GameObject cubesPrefab;
+    private Transform cubesParent;
 
+    [SerializeField] private GameObject cubesPrefab;
+    [SerializeField] private int maxHeightAmountCubes;
+    [SerializeField] private int maxWidthAmountCubes;
+    [SerializeField] private int maxLengthAmountCubes;
+    [SerializeField] private float heightCubes = 0.4f;
+    [SerializeField] private float widthCubes = 0.4f;
+    [SerializeField] private float lengthCubes = 0.4f;
     private ObjectsCreator cubesCreator;
     private List<Cube> cubes = new List<Cube>();
+    private List<GameObject> cubesGroupsGO = new List<GameObject>();
 
     private void Awake()
     {
@@ -69,23 +78,84 @@ public class GameManager : MonoBehaviour
         // {
         //     coins.Add(coinsCreator.FactoryMethod(coinsTransform[i]) as Coin);
         // }
-        // for (var i = 0; i < cubesTransform.Count; i++)
-        // {
-        //     cubes.Add(cubesCreator.FactoryMethod(cubesTransform[i]) as Cube);
-        // }
-
+        
         InitializePlatforms(out var platforms, out var positions, out var rotations);
+
+        InitializeCubes(cubesCreator, out var cubes, positions, rotations);
 
         for (int i = 0; i < amountObstaclesGroups; i++)
         {
             InitializeObstacles(out var obstacles, obstaclesCreator);
             obstaclesGroups.Add(obstacles);
-            Randomize(obstaclesGroups[i]);
         }
 
         CreateObstaclesGroups(obstaclesGroups, obstacleGroupsGO);
 
         ChangeObstaclesGroupsPosRot(obstacleGroupsGO, positions, rotations);
+    }
+
+    private void InitializeCubes(ObjectsCreator cubesCreator, out List<List<Cube>> cubesGroups,
+        List<Vector3> positionsPlatforms, List<Quaternion> rotations)
+    {
+        var startPosX = 0f;
+        var startPosY = 0.7f;
+        cubesGroups = new List<List<Cube>>();
+        for (var i = 0; i < amountOfPlatforms; i++)
+        {
+            var position = new Vector3(startPosX, startPosY);
+            cubes = new List<Cube>();
+
+            var gap = 0.4f;
+            var randomZ = Random.Range(1, maxLengthAmountCubes);
+            var gapValueZ = Random.Range(0, 6);
+            for (var z = 0; z < randomZ; z++, position.z += lengthCubes + gapValueZ * gap)
+            {
+                var randomY = Random.Range(1, maxHeightAmountCubes);
+                for (var y = 0; y < randomY; y++, position.y += heightCubes)
+                {
+                    var randomX = Random.Range(1, maxWidthAmountCubes);
+                    for (int x = 0, index = 1; x < randomX; x++, position.x = x * index * widthCubes, index *= -1)
+                    {
+                        var obj = Instantiate(cubesPrefab, position, Quaternion.identity);
+                        cubes.Add((Cube) cubesCreator.FactoryMethod(obj.transform));
+                    }
+
+                    position = new Vector3(startPosX, position.y, position.z);
+                }
+
+                position = new Vector3(startPosX, startPosY, position.z);
+            }
+
+            cubesGroups.Add(cubes);
+
+            cubesGroupsGO.Add(new GameObject($"Cubes Group #{i}"));
+            for (var j = 0; j < cubesGroups[i].Count; j++)
+            {
+                cubesGroups[i][j].ObjectTransform.parent = cubesGroupsGO[i].transform;
+            }
+
+            cubesGroupsGO[i].transform.parent = cubesParent;
+
+            // todo change cubes positions :(
+
+            // var rot = rotations[i].eulerAngles.y;
+            // if (rot < 0)
+            // {
+            //     rot += 360;
+            // }
+            //
+            // var pos = cubesGroupsGO[i].transform.position;
+            // cubesGroupsGO[i].transform.position = rot switch
+            // {
+            //     0 => new Vector3(pos.x, pos.y,pos.z - lengthOfPlatform),
+            //     90 => new Vector3(pos.x - lengthOfPlatform, pos.y,pos.z),
+            //     180 => new Vector3(pos.x, pos.y,pos.z + lengthOfPlatform),
+            //     270 => new Vector3(pos.x + lengthOfPlatform, pos.y,pos.z)
+            // };
+
+            cubesGroupsGO[i].transform.position = positionsPlatforms[i];
+            cubesGroupsGO[i].transform.rotation = rotations[i];
+        }
     }
 
     private void InitializeCreators()
@@ -96,7 +166,8 @@ public class GameManager : MonoBehaviour
         platformsCreator = new PlatformsCreator();
     }
 
-    private void InitializePlatforms(out List<Platform> platforms, out List<Vector3> positions, out List<Quaternion> rotations)
+    private void InitializePlatforms(out List<Platform> platforms, out List<Vector3> positions,
+        out List<Quaternion> rotations)
     {
         var halfLength = lengthOfPlatform / 2;
         var halfWidth = widthOfPlatform / 2;
@@ -106,7 +177,7 @@ public class GameManager : MonoBehaviour
         positions = new List<Vector3>();
         rotations = new List<Quaternion>();
 
-        for (var i = 0; i < allPlatforms ; i++)
+        for (var i = 0; i < allPlatforms; i++)
             positions.Add(Vector3.zero);
 
         for (var i = 0; i < amountOfPlatforms; i++)
@@ -184,8 +255,8 @@ public class GameManager : MonoBehaviour
 
             if (i < allPlatforms - 1)
             {
-                rotations[i-rotIndex] = Quaternion.Euler(0, platformRotation, 0); // used for rotations of obstacles
-                
+                rotations[i - rotIndex] = Quaternion.Euler(0, platformRotation, 0); // used for rotations of obstacles
+
                 var obj = Instantiate(platform, positions[i], Quaternion.Euler(0, platformRotation, 0), platformParent);
                 platforms.Add((Platform) platformsCreator.FactoryMethod(obj.transform));
             }
@@ -326,42 +397,20 @@ public class GameManager : MonoBehaviour
 
     private void InitializeObstacles(out List<Obstacle> obstacles, ObjectsCreator obstaclesCreator)
     {
+        var startPosY = 0.75f;
         var position = new Vector3(leftBorderX, startPosY);
         obstacles = new List<Obstacle>();
 
-        for (var y = 0; y < maxHeightAmountObstacles; y++, position.y += heightObstacles)
+        for (var x = 0; x < maxWidthAmountObstacles; x++, position.x += widthObstacles)
         {
-            for (var x = 0; x < maxWidthAmountObstacles || position.x < rightBorderX; x++, position.x += widthObstacles)
+            var randomY = Random.Range(1, maxHeightAmountObstacles);
+            for (var y = 0; y < randomY; y++, position.y += heightObstacles)
             {
                 var obj = Instantiate(obstaclesPrefab, position, Quaternion.identity);
                 obstacles.Add((Obstacle) obstaclesCreator.FactoryMethod(obj.transform));
             }
 
-            position = new Vector3(leftBorderX, position.y);
-        }
-    }
-
-    private void Randomize(List<Obstacle> obstacles)
-    {
-        var maxAmount = maxHeightAmountObstacles * maxWidthAmountObstacles;
-        var amountOfObstacles = Random.Range(0, maxAmount);
-        for (int i = 0; i < maxWidthAmountObstacles; i++)
-        {
-            var blocksInColumn = Random.Range(0, maxHeightAmountObstacles);
-            if (amountOfObstacles >= blocksInColumn)
-            {
-                amountOfObstacles -= blocksInColumn;
-            }
-            else
-            {
-                blocksInColumn = amountOfObstacles;
-            }
-
-            for (var j = 0; j < maxWidthAmountObstacles; j++)
-            {
-                obstacles[j * maxHeightAmountObstacles + i].ObjectTransform.gameObject
-                    .SetActive(j < blocksInColumn);
-            }
+            position = new Vector3(position.x, startPosY);
         }
     }
 
@@ -374,10 +423,13 @@ public class GameManager : MonoBehaviour
             {
                 obstaclesGroups[i][j].ObjectTransform.parent = obstacleGroupsGO[i].transform;
             }
+
+            obstacleGroupsGO[i].transform.parent = obstaclesParent;
         }
     }
 
-    private void ChangeObstaclesGroupsPosRot(List<GameObject> obstacleGroupsGO, List<Vector3> positions, List<Quaternion> rotations)
+    private void ChangeObstaclesGroupsPosRot(List<GameObject> obstacleGroupsGO, List<Vector3> positions,
+        List<Quaternion> rotations)
     {
         for (int i = 0; i < obstacleGroupsGO.Count; i++)
         {

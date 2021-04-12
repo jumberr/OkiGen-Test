@@ -6,7 +6,6 @@ namespace Classes.FactoryMethod
     {
         public override GeneratedObjects FactoryMethod(Transform objectTransform)
         {
-            Debug.Log("CUBES!");
             return new Cube(objectTransform);
         }
     }
