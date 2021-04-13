@@ -2,15 +2,29 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
+    [SerializeField] private Animator animator;
+    [SerializeField] private CanvasController canvasController;
     [SerializeField] private CharacterController characterController;
     [SerializeField] private float playerSpeed;
     [SerializeField, Range(0, 1f)] private float horizontalSmoothInput;
     private Vector3 straightDirection = Vector3.forward;
+    private bool tapped;
+    private static readonly int Run = Animator.StringToHash("Run");
 
     private void Update()
     {
-        MobileInput(out var moveDirection);
-        characterController.Move(moveDirection * (playerSpeed * Time.deltaTime));
+        if (!tapped && Input.touchCount > 0)
+        {
+            animator.SetTrigger(Run);
+            tapped = !tapped;
+            canvasController.Tapped = true;
+            canvasController.OffCursor();
+        }
+        else if (tapped)
+        {
+            MobileInput(out var moveDirection);
+            characterController.Move(moveDirection * (playerSpeed * Time.deltaTime));
+        }
     }
 
     private void MobileInput(out Vector3 moveDirection)

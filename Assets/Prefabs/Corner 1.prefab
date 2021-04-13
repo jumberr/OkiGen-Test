@@ -44,7 +44,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5063287965747147835}
   - component: {fileID: 5063287965747147829}
-  - component: {fileID: 5063287965747147834}
+  - component: {fileID: 1984150229691738853}
   m_Layer: 0
   m_Name: TurnLeft
   m_TagString: Untagged
@@ -77,9 +77,9 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.8768778, y: 5.6354938, z: 3.7773757}
-  m_Center: {x: 1.7974906, y: 2.3177474, z: -0.15622687}
---- !u!114 &5063287965747147834
+  m_Size: {x: 0.8768778, y: 5.6354938, z: 3.198807}
+  m_Center: {x: 1.7974906, y: 2.3177474, z: 0.13305748}
+--- !u!114 &1984150229691738853
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -92,7 +92,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   turnRight: {fileID: 5063287966118127434}
-  mainCam: {fileID: 0}
   duration: 2
 --- !u!1 &5063287965924863170
 GameObject:
@@ -135,7 +134,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5063287966118127431}
   - component: {fileID: 5063287966118127428}
-  - component: {fileID: 5063287966118127429}
+  - component: {fileID: 2594833843315459243}
   m_Layer: 0
   m_Name: TurnRight
   m_TagString: Untagged
@@ -170,7 +169,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 3.5789676, y: 5.6354938, z: 0.8688307}
   m_Center: {x: 0.008638144, y: 2.3177474, z: -1.9057727}
---- !u!114 &5063287966118127429
+--- !u!114 &2594833843315459243
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -183,7 +182,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   turnLeft: {fileID: 5063287965747147832}
-  mainCam: {fileID: 0}
   duration: 2
 --- !u!1 &5063287966143997905
 GameObject:

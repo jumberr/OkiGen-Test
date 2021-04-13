@@ -1,6 +1,6 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerCubes : MonoBehaviour
 {
@@ -9,9 +9,10 @@ public class PlayerCubes : MonoBehaviour
     [SerializeField] private GameObject cubePrefab;
     [SerializeField] private GameObject firstCube;
     [SerializeField] private CharacterController characterController;
+    [SerializeField] private CanvasController canvasController;
     private List<GameObject> playerCubes = new List<GameObject>();
     private int amountOfCubes = 1;
-    private float heightCube = 0.4f;
+    private float heightCube = 0.5f;
 
     private void Awake()
     {
@@ -35,9 +36,10 @@ public class PlayerCubes : MonoBehaviour
     }
     public void DeleteCube()
     {
-        if (amountOfCubes < 1)
+        if (amountOfCubes <= 1)
         {
-            // dead scene
+            canvasController.RestartButton.gameObject.SetActive(true);
+            Time.timeScale = 0;
         }
         else
         {

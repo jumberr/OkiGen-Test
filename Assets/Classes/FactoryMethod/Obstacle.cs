@@ -7,5 +7,6 @@ namespace Classes.FactoryMethod
         public Obstacle(Transform objectTransform) : base(objectTransform)
         {
         }
+        
     }
 }
