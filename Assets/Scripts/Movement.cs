@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class Movement : MonoBehaviour
@@ -11,7 +10,6 @@ public class Movement : MonoBehaviour
     private void Update()
     {
         MobileInput(out var moveDirection);
-
         characterController.Move(moveDirection * (playerSpeed * Time.deltaTime));
     }
 

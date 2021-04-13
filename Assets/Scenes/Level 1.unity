@@ -456,7 +456,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1370670718}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.1, z: 0}
+  m_LocalPosition: {x: 0, y: 0.02, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2089384622}
@@ -475,6 +475,7 @@ GameObject:
   - component: {fileID: 1625191303}
   - component: {fileID: 1625191302}
   - component: {fileID: 1625191305}
+  - component: {fileID: 1625191306}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -508,13 +509,13 @@ CharacterController:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Height: 1
+  m_Height: 1.46
   m_Radius: 0.2
   m_SlopeLimit: 0
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0.42, z: 0}
+  m_Center: {x: 0, y: 0.63, z: 0}
 --- !u!4 &1625191304
 Transform:
   m_ObjectHideFlags: 0
@@ -523,7 +524,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1625191301}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.6, z: -6.54}
+  m_LocalPosition: {x: 0, y: 0.68, z: -6.54}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2983430337033012376}
@@ -551,6 +552,24 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1625191306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1625191301}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf1767469d4426b4cb59014bb5620a72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerGfx: {fileID: 2983430337033012376}
+  playerCubesParent: {fileID: 1370670719}
+  cubePrefab: {fileID: 9136721725653287106, guid: 5da91402367e6fd4a83dc33012af49a8,
+    type: 3}
+  firstCube: {fileID: 2089384621}
+  characterController: {fileID: 1625191303}
 --- !u!1 &1784891239
 GameObject:
   m_ObjectHideFlags: 0
@@ -1440,7 +1459,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2986140670537156066}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.3, z: 0}
+  m_LocalPosition: {x: 0, y: 0.22, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2988654992743074962}

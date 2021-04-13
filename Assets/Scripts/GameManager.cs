@@ -136,24 +136,23 @@ public class GameManager : MonoBehaviour
 
             cubesGroupsGO[i].transform.parent = cubesParent;
 
-            // todo change cubes positions :(
+            // change position of spawned cubes
+            var rot = rotations[i].eulerAngles.y;
+            if (rot < 0)
+            {
+                rot += 360;
+            }
 
-            // var rot = rotations[i].eulerAngles.y;
-            // if (rot < 0)
-            // {
-            //     rot += 360;
-            // }
-            //
-            // var pos = cubesGroupsGO[i].transform.position;
-            // cubesGroupsGO[i].transform.position = rot switch
-            // {
-            //     0 => new Vector3(pos.x, pos.y,pos.z - lengthOfPlatform),
-            //     90 => new Vector3(pos.x - lengthOfPlatform, pos.y,pos.z),
-            //     180 => new Vector3(pos.x, pos.y,pos.z + lengthOfPlatform),
-            //     270 => new Vector3(pos.x + lengthOfPlatform, pos.y,pos.z)
-            // };
+            var pos = positionsPlatforms[i];
+            var halfOfLength = lengthOfPlatform / 2 - 3f; // -3 just for better positions that not match with corners pos
+            cubesGroupsGO[i].transform.position = rot switch
+            {
+                0 => new Vector3(pos.x, pos.y,pos.z - halfOfLength),
+                90 => new Vector3(pos.x - halfOfLength, pos.y,pos.z),
+                180 => new Vector3(pos.x, pos.y,pos.z + halfOfLength),
+                270 => new Vector3(pos.x + halfOfLength, pos.y,pos.z)
+            };
 
-            cubesGroupsGO[i].transform.position = positionsPlatforms[i];
             cubesGroupsGO[i].transform.rotation = rotations[i];
         }
     }
@@ -403,6 +402,7 @@ public class GameManager : MonoBehaviour
 
         for (var x = 0; x < maxWidthAmountObstacles; x++, position.x += widthObstacles)
         {
+            //var maxLengthY = cubesList[i].Count;
             var randomY = Random.Range(1, maxHeightAmountObstacles);
             for (var y = 0; y < randomY; y++, position.y += heightObstacles)
             {
