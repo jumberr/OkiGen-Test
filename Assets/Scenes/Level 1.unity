@@ -355,7 +355,6 @@ MonoBehaviour:
   finish: {fileID: 1640682397243316209, guid: d6e2ff8e70a7d9241aade18925f59408, type: 3}
   cornerIndex: 0200000004000000
   leftBorderX: -1.5
-  rightBorderX: 1.5
   amountOfPlatforms: 7
   lengthOfPlatform: 20
   widthOfPlatform: 3.5
@@ -364,13 +363,10 @@ MonoBehaviour:
     type: 3}
   maxWidthAmountCoins: 2
   maxLengthAmountCoins: 2
-  heightCoins: 0.5
-  widthCoins: 0.5
   obstaclesParent: {fileID: 52321427}
   amountObstaclesGroups: 7
   obstaclesPrefab: {fileID: 1741644492769487312, guid: 58f9e319f7727b74d817deca202ccf92,
     type: 3}
-  maxHeightAmountObstacles: 7
   maxWidthAmountObstacles: 7
   heightObstacles: 0.5
   widthObstacles: 0.5
@@ -1491,7 +1487,7 @@ CharacterController:
   m_Enabled: 1
   serializedVersion: 2
   m_Height: 1.52
-  m_Radius: 0.2
+  m_Radius: 0.1
   m_SlopeLimit: 0
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
