@@ -1447,6 +1447,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1625191304}
   - component: {fileID: 1625191303}
+  - component: {fileID: 1625191309}
+  - component: {fileID: 1625191308}
   - component: {fileID: 1625191302}
   - component: {fileID: 1625191305}
   - component: {fileID: 1625191306}
@@ -1470,11 +1472,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43b52a845c35c5146ad162e877aa50fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 1625191305}
-  canvasController: {fileID: 1211889575}
   characterController: {fileID: 1625191303}
   playerSpeed: 5
-  horizontalSmoothInput: 0.05
 --- !u!143 &1625191303
 CharacterController:
   m_ObjectHideFlags: 0
@@ -1547,7 +1546,7 @@ MonoBehaviour:
     type: 3}
   firstCube: {fileID: 2089384621}
   characterController: {fileID: 1625191303}
-  canvasController: {fileID: 1211889575}
+  canvasHandler: {fileID: 1211889575}
 --- !u!114 &1625191307
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1560,6 +1559,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2b7922eaf5ecc7408ba8de3dbf2b1b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1625191308
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1625191301}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c54e3205f36c4b8683c3fee99f9739b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movement: {fileID: 1625191302}
+  animationHandler: {fileID: 1625191309}
+  canvasHandler: {fileID: 1211889575}
+  horizontalSmoothInput: 0.1
+--- !u!114 &1625191309
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1625191301}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce6d38ced24c6324ca974c8233a565b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 1625191305}
 --- !u!1 &1784891239
 GameObject:
   m_ObjectHideFlags: 0

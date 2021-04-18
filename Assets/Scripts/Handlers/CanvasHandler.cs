@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class CanvasController : MonoBehaviour
+public class CanvasHandler : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI diamondText;
     [SerializeField] private Transform player;
@@ -14,7 +14,7 @@ public class CanvasController : MonoBehaviour
     [SerializeField] private Image cursor;
     private float duration = 2f;
 
-    public bool Tapped { get; set; }
+    private bool tapped;
 
     public Button RestartButton => restartButton;
     public Button NextLevelButton => nextLevelButton;
@@ -40,7 +40,7 @@ public class CanvasController : MonoBehaviour
     {
         var prevPos = cursor.transform.position;
         var y = -30f;
-        while (!Tapped)
+        while (!tapped)
         {
             var pos = prevPos;
             pos.x *= -1f;
@@ -51,9 +51,15 @@ public class CanvasController : MonoBehaviour
         }
     }
 
-    public void OffCursor()
+    private void OffCursor()
     {
         cursor.gameObject.SetActive(false);
+    }
+
+    public void GetStartingInput()
+    {
+        tapped = !tapped;
+        OffCursor();
     }
 
     public void Restart() => SceneManager.LoadScene(0);

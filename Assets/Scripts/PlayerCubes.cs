@@ -10,7 +10,7 @@ public class PlayerCubes : MonoBehaviour
     [SerializeField] private GameObject cubePrefab;
     [SerializeField] private GameObject firstCube;
     [SerializeField] private CharacterController characterController;
-    [SerializeField] private CanvasController canvasController;
+    [SerializeField] private CanvasHandler canvasHandler;
     private List<GameObject> playerCubes = new List<GameObject>();
     private int amountOfCubes = 1;
     private float heightCube = 0.5f;
@@ -31,7 +31,7 @@ public class PlayerCubes : MonoBehaviour
     {
         if (amountOfCubes <= 1)
         {
-            canvasController.RestartButton.gameObject.SetActive(true);
+            canvasHandler.RestartButton.gameObject.SetActive(true);
             Time.timeScale = 0;
         }
         else

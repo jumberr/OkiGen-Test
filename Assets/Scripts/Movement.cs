@@ -2,67 +2,22 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
-    [SerializeField] private Animator animator;
-    [SerializeField] private CanvasController canvasController;
     [SerializeField] private CharacterController characterController;
     [SerializeField] private float playerSpeed;
-    [SerializeField, Range(0, 1f)] private float horizontalSmoothInput;
-    private Vector3 straightDirection = Vector3.forward;
-    private bool tapped;
-    private static readonly int Run = Animator.StringToHash("Run");
+
+    public Vector3 StraightDirection { get; private set; }
+    public Vector3 MoveDirection { get; set; }
+
+    private void Awake()
+    {
+        StraightDirection = Vector3.forward;
+    }
 
     private void Update()
     {
-        if (!tapped && Input.touchCount > 0)
-        {
-            animator.SetTrigger(Run);
-            tapped = !tapped;
-            canvasController.Tapped = true;
-            canvasController.OffCursor();
-        }
-        else if (tapped)
-        {
-            MobileInput(out var moveDirection);
-            characterController.Move(moveDirection * (playerSpeed * Time.deltaTime));
-        }
+        characterController.Move(MoveDirection * (playerSpeed * Time.deltaTime));
     }
 
-    private void MobileInput(out Vector3 moveDirection)
-    {
-        moveDirection = straightDirection;
-        if (Input.touchCount > 0)
-        {
-            var touch = Input.GetTouch(0);
-
-            if (touch.phase == TouchPhase.Moved)
-            {
-                var touchDeltaPosition = touch.deltaPosition;
-
-                Vector3 deltaVector;
-                if (straightDirection == Vector3.forward) // z
-                {
-                    deltaVector = new Vector3(touchDeltaPosition.x * horizontalSmoothInput, 0, straightDirection.z);
-                }
-                else if (straightDirection == Vector3.right) // x
-                {
-                    deltaVector =
-                        new Vector3(straightDirection.x, 0, -touchDeltaPosition.x * horizontalSmoothInput);
-                }
-                else if (straightDirection == Vector3.back) // -z
-                {
-                    deltaVector =
-                        new Vector3(-touchDeltaPosition.x * horizontalSmoothInput, 0, straightDirection.z);
-                }
-                else // -x
-                {
-                    deltaVector =
-                        new Vector3(straightDirection.x, 0, touchDeltaPosition.x * horizontalSmoothInput);
-                }
-
-                moveDirection = deltaVector;
-            }
-        }
-    }
 
     public void OnRotate(float rotation)
     {
@@ -74,43 +29,43 @@ public class Movement : MonoBehaviour
         //           2nd time     |     -z         |       -z
         //           3d time      |     -x         |        x
         //           4th time     |      z         |        z
-        
-        if (rotation > 0)  // turn right
+
+        if (rotation > 0) // turn right
         {
-            if (straightDirection == Vector3.forward) // was z
+            if (StraightDirection == Vector3.forward) // was z
             {
-                straightDirection = Vector3.right; // do x
+                StraightDirection = Vector3.right; // do x
             }
-            else if (straightDirection == Vector3.right) // was x
+            else if (StraightDirection == Vector3.right) // was x
             {
-                straightDirection = Vector3.back; // do -z
+                StraightDirection = Vector3.back; // do -z
             }
-            else if (straightDirection == Vector3.back) //was -z
+            else if (StraightDirection == Vector3.back) //was -z
             {
-                straightDirection = Vector3.left; // do -x
+                StraightDirection = Vector3.left; // do -x
             }
             else
             {
-                straightDirection = Vector3.forward;
+                StraightDirection = Vector3.forward;
             }
         }
-        else  //left
+        else //left
         {
-            if (straightDirection == Vector3.forward) // was z
+            if (StraightDirection == Vector3.forward) // was z
             {
-                straightDirection = Vector3.left; // do -x
+                StraightDirection = Vector3.left; // do -x
             }
-            else if (straightDirection == Vector3.left) // was -x
+            else if (StraightDirection == Vector3.left) // was -x
             {
-                straightDirection = Vector3.back; // do -z
+                StraightDirection = Vector3.back; // do -z
             }
-            else if (straightDirection == Vector3.back) //was -z
+            else if (StraightDirection == Vector3.back) //was -z
             {
-                straightDirection = Vector3.right; // do x
+                StraightDirection = Vector3.right; // do x
             }
             else
             {
-                straightDirection = Vector3.forward;
+                StraightDirection = Vector3.forward;
             }
         }
     }
