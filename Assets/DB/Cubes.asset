@@ -12,3 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d492ab37f81643e7a75c5aba53681381, type: 3}
   m_Name: Cubes
   m_EditorClassIdentifier: 
+  cubesPrefab: {fileID: 3073916641745297735, guid: be81fda1b220aee40986ad8aa0826b79,
+    type: 3}
+  heightCubes: 0.5
+  widthCubes: 0.5
+  lengthCubes: 0.5

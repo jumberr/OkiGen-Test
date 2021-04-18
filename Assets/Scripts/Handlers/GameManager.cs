@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using SO;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -7,15 +8,16 @@ namespace Handlers
     public class GameManager : MonoBehaviour
     {
         [Space, Header("PLATFORM")] 
-        [SerializeField] private Transform platformParent;
-        [SerializeField] private GameObject platform;
-        [SerializeField] private GameObject corner;
-        [SerializeField] private GameObject finish;
+        [SerializeField] private PlatformsStats platformsStats;
         [SerializeField] private List<int> cornerIndex;
-        [SerializeField] private float leftBorderX = -1.5f;
+        [SerializeField] private Transform platformParent;
         [SerializeField] private int amountOfPlatforms = 7;
-        [SerializeField] private float lengthOfPlatform = 20f;
-        [SerializeField] private float widthOfPlatform = 3.5f;
+        private GameObject platform;
+        private GameObject corner;
+        private GameObject finish;
+        private float lengthOfPlatform;
+        private float widthOfPlatform;
+        private float leftBorderX;
 
         private enum Turn
         {
@@ -34,39 +36,44 @@ namespace Handlers
 
         // COINS
         [Space, Header("COINS")] 
+        [SerializeField] private CoinsStats coinsStats;
         [SerializeField] private Transform coinsParent;
-        [SerializeField] private GameObject coinsPrefab;
         [SerializeField] private int maxWidthAmountCoins;
         [SerializeField] private int maxLengthAmountCoins;
+        private GameObject coinsPrefab;
         private List<GameObject> coinsGroupsGO = new List<GameObject>();
         private List<Transform> coins = new List<Transform>();
 
         // OBSTACLES
         [Space, Header("OBSTACLES")] 
+        [SerializeField] private ObstaclesStats obstaclesStats;
         [SerializeField] private Transform obstaclesParent;
         [SerializeField] private int amountObstaclesGroups;
-        [SerializeField] private GameObject obstaclesPrefab;
         [SerializeField] private int maxWidthAmountObstacles;
-        [SerializeField] private float heightObstacles = 0.5f;
-        [SerializeField] private float widthObstacles = 0.5f;
+        private GameObject obstaclesPrefab;
+        private float heightObstacles;
+        private float widthObstacles;
         private List<GameObject> obstacleGroupsGO = new List<GameObject>();
 
         // CUBES
-        [Space, Header("CUBES")] 
+        [Space, Header("CUBES")]
+        [SerializeField] private CubesStats cubesStats;
         [SerializeField] private Transform cubesParent;
-        [SerializeField] private GameObject cubesPrefab;
         [SerializeField] private int maxHeightAmountCubes;
         [SerializeField] private int maxWidthAmountCubes;
         [SerializeField] private int maxLengthAmountCubes;
-        [SerializeField] private float heightCubes = 0.5f;
-        [SerializeField] private float widthCubes = 0.5f;
-        [SerializeField] private float lengthCubes = 0.5f;
+        private GameObject cubesPrefab;
+        private float heightCubes;
+        private float widthCubes;
+        private float lengthCubes;
         private List<Transform> cubes = new List<Transform>();
         private List<GameObject> cubesGroupsGO = new List<GameObject>();
 
         private void Awake()
         {
             Time.timeScale = 1f;
+
+            LoadStats();
 
             InitializePlatforms(out var positions, out var rotations);
 
@@ -75,6 +82,44 @@ namespace Handlers
             InitializeObstacles(cubesGroups, obstacleGroupsGO, positions, rotations);
 
             InitializeCoins(positions, rotations);
+        }
+
+        private void LoadStats()
+        {
+            LoadStatsOfPlatforms();
+            LoadStatsOfCoins();
+            LoadStatsOfObstacles();
+            LoadStatsOfCubes();
+        }
+
+        private void LoadStatsOfPlatforms()
+        {
+            platform = platformsStats.Platform;
+            corner = platformsStats.Corner;
+            finish = platformsStats.Finish;
+            lengthOfPlatform = platformsStats.LengthOfPlatform;
+            widthOfPlatform = platformsStats.WidthOfPlatform;
+            leftBorderX = platformsStats.LeftBorderX;
+        }
+
+        private void LoadStatsOfCoins()
+        {
+            coinsPrefab = coinsStats.CoinsPrefab;
+        }
+
+        private void LoadStatsOfObstacles()
+        {
+            obstaclesPrefab = obstaclesStats.ObstaclesPrefab;
+            heightObstacles = obstaclesStats.HeightObstacles;
+            widthObstacles = obstaclesStats.WidthObstacles;
+        }
+
+        private void LoadStatsOfCubes()
+        {
+            cubesPrefab = cubesStats.CubesPrefab;
+            heightCubes = cubesStats.HeightCubes;
+            widthCubes = cubesStats.WidthCubes;
+            lengthCubes = cubesStats.LengthCubes;
         }
 
         private void InitializeCoins(List<Vector3> positionsPlatforms, List<Quaternion> rotations)
@@ -287,9 +332,11 @@ namespace Handlers
 
                 if (i < allPlatforms - 1)
                 {
-                    rotations[i - rotIndex] = Quaternion.Euler(0, platformRotation, 0); // used for rotations of obstacles
+                    rotations[i - rotIndex] =
+                        Quaternion.Euler(0, platformRotation, 0); // used for rotations of obstacles
 
-                    var obj = Instantiate(platform, positions[i], Quaternion.Euler(0, platformRotation, 0), platformParent);
+                    var obj = Instantiate(platform, positions[i], Quaternion.Euler(0, platformRotation, 0),
+                        platformParent);
                     platforms.Add(obj.transform);
                 }
                 else

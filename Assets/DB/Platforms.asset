@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 699df9572d774c529764192f67dff742, type: 3}
+  m_Name: Platforms
+  m_EditorClassIdentifier: 
+  platform: {fileID: 1574843576559738277, guid: 9c22e850ee398b443ac80a5d1d089365,
+    type: 3}
+  corner: {fileID: 5063287965639903258, guid: fc195e06b4846344b80f6db793139be5, type: 3}
+  finish: {fileID: 1640682397243316209, guid: d6e2ff8e70a7d9241aade18925f59408, type: 3}
+  leftBorderX: -1.5
+  lengthOfPlatform: 20
+  widthOfPlatform: 3.5

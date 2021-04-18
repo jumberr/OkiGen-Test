@@ -12,3 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba958dc277e94e54a342c18ed5529d22, type: 3}
   m_Name: Coins
   m_EditorClassIdentifier: 
+  coinsPrefab: {fileID: 2587184452625369605, guid: 5c02591794acece409986647ed6329a7,
+    type: 3}
