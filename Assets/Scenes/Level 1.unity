@@ -352,10 +352,11 @@ MonoBehaviour:
   cornerIndex: 0200000004000000
   platformParent: {fileID: 266297315}
   amountOfPlatforms: 7
+  leftBorderX: -1.5
   coinsStats: {fileID: 11400000, guid: b406a4817ac0ad547b15908162dd9b8f, type: 2}
   coinsParent: {fileID: 1558007298}
-  maxWidthAmountCoins: 2
-  maxLengthAmountCoins: 2
+  maxWidthAmountCoins: 3
+  maxLengthAmountCoins: 3
   obstaclesStats: {fileID: 11400000, guid: 7e6baa6ef93390840a4d9bd6199ab738, type: 2}
   obstaclesParent: {fileID: 52321427}
   amountObstaclesGroups: 7

@@ -7,11 +7,9 @@ namespace SO
     {
         [Space, Header("OBSTACLES")]
         [SerializeField] private GameObject obstaclesPrefab;
-        [SerializeField] private float heightObstacles = 0.5f;
-        [SerializeField] private float widthObstacles = 0.5f;
-        
+        [SerializeField] private float sideOfObstacles = 0.5f;
+
         public GameObject ObstaclesPrefab => obstaclesPrefab;
-        public float HeightObstacles => heightObstacles;
-        public float WidthObstacles => widthObstacles;
+        public float SideOfObstacles => sideOfObstacles;
     }
 }
