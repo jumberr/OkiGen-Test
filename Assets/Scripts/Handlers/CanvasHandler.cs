@@ -5,64 +5,67 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class CanvasHandler : MonoBehaviour
+namespace Handlers
 {
-    [SerializeField] private TextMeshProUGUI diamondText;
-    [SerializeField] private Transform player;
-    [SerializeField] private Button restartButton;
-    [SerializeField] private Button nextLevelButton;
-    [SerializeField] private Image cursor;
-    private float duration = 2f;
-
-    private bool tapped;
-
-    public Button RestartButton => restartButton;
-    public Button NextLevelButton => nextLevelButton;
-
-    private Player coins;
-    private void Start()
+    public class CanvasHandler : MonoBehaviour
     {
-        coins = player.GetComponent<Player>();
-        StartCoroutine(ChangeCursorPos());
-        StartCoroutine(ShowText());
-    }
+        [SerializeField] private TextMeshProUGUI diamondText;
+        [SerializeField] private Transform player;
+        [SerializeField] private Button restartButton;
+        [SerializeField] private Button nextLevelButton;
+        [SerializeField] private Image cursor;
+        private float duration = 2f;
 
-    private IEnumerator ShowText()
-    {
-        while (true)
+        private bool tapped;
+
+        public Button RestartButton => restartButton;
+        public Button NextLevelButton => nextLevelButton;
+
+        private PlayerHandler coins;
+        private void Start()
         {
-            diamondText.text = coins.Coins.ToString();
-            yield return new WaitForSecondsRealtime(1f);
+            coins = player.GetComponent<PlayerHandler>();
+            StartCoroutine(ChangeCursorPos());
+            StartCoroutine(ShowText());
         }
-    }
 
-    private IEnumerator ChangeCursorPos()
-    {
-        var prevPos = cursor.transform.position;
-        var y = -30f;
-        while (!tapped)
+        private IEnumerator ShowText()
         {
-            var pos = prevPos;
-            pos.x *= -1f;
-            pos.y = y;
-            cursor.transform.DOLocalMove(pos, duration);
-            prevPos = pos;
-            yield return new WaitForSeconds(duration);
+            while (true)
+            {
+                diamondText.text = coins.GetCoins().ToString();
+                yield return new WaitForSecondsRealtime(1f);
+            }
         }
+
+        private IEnumerator ChangeCursorPos()
+        {
+            var prevPos = cursor.transform.position;
+            var y = -30f;
+            while (!tapped)
+            {
+                var pos = prevPos;
+                pos.x *= -1f;
+                pos.y = y;
+                cursor.transform.DOLocalMove(pos, duration);
+                prevPos = pos;
+                yield return new WaitForSeconds(duration);
+            }
+        }
+
+        private void OffCursor()
+        {
+            cursor.gameObject.SetActive(false);
+        }
+
+        public void GetStartingInput()
+        {
+            tapped = !tapped;
+            OffCursor();
+        }
+
+        public void Restart() => SceneManager.LoadScene(0);
+        public void LoadNextLevel() => SceneManager.LoadScene(0);
+
     }
-
-    private void OffCursor()
-    {
-        cursor.gameObject.SetActive(false);
-    }
-
-    public void GetStartingInput()
-    {
-        tapped = !tapped;
-        OffCursor();
-    }
-
-    public void Restart() => SceneManager.LoadScene(0);
-    public void LoadNextLevel() => SceneManager.LoadScene(0);
-
 }

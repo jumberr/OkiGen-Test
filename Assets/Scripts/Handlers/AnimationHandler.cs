@@ -1,22 +1,25 @@
 using UnityEngine;
 
-public class AnimationHandler : MonoBehaviour
+namespace Handlers
 {
-    [SerializeField] private Animator animator;
-    private static readonly int Run = Animator.StringToHash("Run");
-
-    private void Awake()
+    public class AnimationHandler : MonoBehaviour
     {
-        animator ??= GetComponent<Animator>();
-    }
+        [SerializeField] private Animator animator;
+        private static readonly int Run = Animator.StringToHash("Run");
 
-    private void ChangeState()
-    {
-        animator.SetTrigger(Run);
-    }
+        private void Awake()
+        {
+            animator ??= GetComponent<Animator>();
+        }
 
-    public void GetStartingInput()
-    {
-        ChangeState();
+        private void ChangeState()
+        {
+            animator.SetTrigger(Run);
+        }
+
+        public void GetStartingInput()
+        {
+            ChangeState();
+        }
     }
 }

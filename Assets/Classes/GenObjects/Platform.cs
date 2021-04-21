@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Classes
+namespace Classes.GenObjects
 {
     public class Platform : GeneratedObjects
     {

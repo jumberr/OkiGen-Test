@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
+using Classes.GenObjects;
 using Handlers;
 using UnityEngine;
 
-namespace Classes
+namespace Classes.Builders
 {
     public class PlatformBuilder : Builder<Platform>
     {

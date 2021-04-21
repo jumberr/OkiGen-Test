@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace Classes
+namespace Classes.Builders
 {
     public class Builder<T>
-        where T : GeneratedObjects
     {
         private List<T> listObj;
         private List<List<T>> listGroups;

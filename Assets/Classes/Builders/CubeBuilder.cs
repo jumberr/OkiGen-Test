@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
+using Classes.GenObjects;
 using Handlers;
 using UnityEngine;
 using PositionToSpawn = Handlers.GameManager.PositionToSpawn;
 
-namespace Classes
+namespace Classes.Builders
 {
     public class CubeBuilder : Builder<Cube>
     {
